@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { fragmentShader, vertexShader } from "./shader";
-import { loadTexture } from "../../lib/helpers";
-import { materialAO } from "three/tsl";
+import { createMaterial, loadTexture } from "../../lib/helpers";
 const container = document.getElementById("app") as HTMLDivElement;
 
 if (!container) {
@@ -11,7 +10,7 @@ if (!container) {
 
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer();
-renderer.setClearColor(0xffffff, 1); // Set background to white
+renderer.setClearColor(0x00000, 1); // Set background to white
 
 const fov = 45;
 const aspect = container.clientWidth / container.clientHeight;
@@ -31,21 +30,30 @@ console.log(loadedTextures);
 loadedTextures.texture.wrapS = THREE.RepeatWrapping;
 loadedTextures.texture.wrapT = THREE.RepeatWrapping;
 
-const material = new THREE.ShaderMaterial({
-  fragmentShader,
-  vertexShader,
-  uniforms: {
-    pattern: {
-      value: loadedTextures.texture,
-    },
-    time: { value: 0.0 },
-  },
+const material = createMaterial(fragmentShader, vertexShader, {
+  pattern: loadedTextures.texture,
+  time: 0.0,
+  lightPosition: new THREE.Vector3(0, 0, 2),
+  lightColor: new THREE.Color(0xffffff),
+  ambientColor: new THREE.Color(0x404040),
+  ambientIntensity: 10.0,
+  diffuseIntensity: 1.0,
 });
 
+const standardMat = new THREE.MeshStandardMaterial({
+  color: "white",
+});
 const geometry = new THREE.SphereGeometry(1);
+const mesh = new THREE.Mesh(geometry, standardMat);
+const box = new THREE.Mesh(new THREE.BoxGeometry(), material);
+box.position.set(0, 0, 0);
+const light = new THREE.DirectionalLight();
+light.color = new THREE.Color("yellow");
+light.position.set(0, 0, 50);
 
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+// scene.add(mesh);
+// scene.add(light);
+scene.add(box);
 
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -53,11 +61,11 @@ container.append(renderer.domElement);
 
 // Animation loop
 
-mesh.rotation.y = 1;
 const clock = new THREE.Clock();
 function animate() {
   requestAnimationFrame(animate);
-  mesh.rotation.x += 0.01;
+  box.rotation.x += 0.02;
+  box.rotation.y += 0.02;
   // Optional: Rotate the cube for some animation
   material.uniforms.time.value = clock.getElapsedTime() * 1;
   renderer.render(scene, camera);

@@ -10,3 +10,21 @@ export const loadTexture = <T extends string>(
   }
   return loadedTextures;
 };
+
+export const createMaterial = (
+  fragmentShader: string,
+  vertexShader: string,
+  rawUniforms: Record<string, unknown>,
+) => {
+  const uniforms: Record<string, THREE.Uniform> = {};
+  for (const key of Object.keys(rawUniforms)) {
+    uniforms[key] = {
+      value: rawUniforms[key],
+    };
+  }
+  return new THREE.ShaderMaterial({
+    fragmentShader,
+    vertexShader,
+    uniforms,
+  });
+};
