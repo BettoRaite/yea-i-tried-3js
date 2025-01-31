@@ -1,0 +1,9 @@
+body {
+    margin: 0;
+}
+#app {
+    width: 100vw; /* or any specific width */
+    height: 100vh; /* or any specific height */
+    background-color: white; /* Optional: to see the container */
+    overflow: hidden;
+}

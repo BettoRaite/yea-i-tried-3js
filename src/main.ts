@@ -1,0 +1,1 @@
+import "./examples/cube/cube";
