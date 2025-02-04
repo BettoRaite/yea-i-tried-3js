@@ -37,7 +37,7 @@ const material = createMaterial(fragmentShader, vertexShader, {
   lightColor: new THREE.Color(0xffffff),
   ambientColor: new THREE.Color(0x404040),
   ambientIntensity: 3.0,
-  diffuseIntensity: 1.0,
+  diffuseIntensity: 2.0,
 });
 
 const standardMat = new THREE.MeshStandardMaterial({
