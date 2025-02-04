@@ -1,1 +1,2 @@
-import "./examples/cube/cube";
+// import "./examples/light/light";
+import "./examples/effects/effects";

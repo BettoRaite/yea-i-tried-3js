@@ -36,7 +36,7 @@ const material = createMaterial(fragmentShader, vertexShader, {
   lightPosition: new THREE.Vector3(0, 0, 2),
   lightColor: new THREE.Color(0xffffff),
   ambientColor: new THREE.Color(0x404040),
-  ambientIntensity: 10.0,
+  ambientIntensity: 3.0,
   diffuseIntensity: 1.0,
 });
 
@@ -45,7 +45,7 @@ const standardMat = new THREE.MeshStandardMaterial({
 });
 const geometry = new THREE.SphereGeometry(1);
 const mesh = new THREE.Mesh(geometry, standardMat);
-const box = new THREE.Mesh(new THREE.BoxGeometry(), material);
+const box = new THREE.Mesh(new THREE.SphereGeometry(), material);
 box.position.set(0, 0, 0);
 const light = new THREE.DirectionalLight();
 light.color = new THREE.Color("yellow");

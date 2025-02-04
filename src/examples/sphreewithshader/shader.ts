@@ -30,7 +30,7 @@ export const fragmentShader = `
 
   void main() {
     // Create a vertical wave effect
-    float wave = sin(vUv.y * 1.0 + time * 1.0) * 2.0;
+    float wave = sin(vUv.y * 1.0 + time * 1.0) * 1.0;
     vec2 animatedUv = vUv + vec2(wave, 0.0);
 
     // Sample the texture
@@ -48,7 +48,7 @@ export const fragmentShader = `
     vec3 diffuse = diff * lightColor * diffuseIntensity;
 
     // Combine ambient, diffuse, and texture color
-    vec3 finalColor = (ambient + diffuse) * texColor;
+    vec3 finalColor = (ambient + diffuse) * texColor * 1.0;
 
     // Output the final color
     gl_FragColor = vec4(finalColor, 1.0);
